@@ -1,0 +1,41 @@
+<html>
+    
+    <script scr= "http://code.jquery.com/jquery-latest.min.js"> </script>
+    <script scr= "socket.io/socket.io.js"> </script>
+    
+    
+    <div id="chat"> </div>
+    
+    <form id ="send-message">
+        <input type="text" id ="message">
+        <input type="submit">
+        
+    </form>
+        
+    
+    <script>
+    
+     jquery(function($) {
+     
+     
+         var socket = io.connect();
+         var $msgForm = $('#send-message');
+         var $msg = $('#message');
+         var $chat = $('#chat')
+         
+         $msgForm.submit(function(e) {
+           e.preventDefault();
+           socket.emit('send-message',$msg.val())
+           $msg.val('')
+         });
+         
+         
+         socket.on("new message", function(data){
+         $chat.append(data + "<br/>")
+         });
+     });
+     
+     
+    </script>
+    
+</html>
